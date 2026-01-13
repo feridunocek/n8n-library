@@ -1,7 +1,4 @@
-
-# Pass the DATABASE_URL environment variable during build
-ARG DATABASE_URL
-ENV DATABASE_URL=$DATABASE_URL
+FROM node:22-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -19,6 +16,9 @@ RUN \
 
 # Rebuild the source code only when needed
 FROM base AS builder
+# Pass the DATABASE_URL environment variable during build
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
