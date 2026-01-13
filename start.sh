@@ -1,6 +1,6 @@
 # Run Prisma DB Push to ensure schema is secure
 echo "Pushing database schema..."
-./node_modules/.bin/prisma db push --accept-data-loss
+node ./node_modules/prisma/build/index.js db push --accept-data-loss
 
 # Check if migrations ran successfully (optional but good context)
 if [ $? -eq 0 ]; then
