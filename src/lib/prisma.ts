@@ -3,7 +3,12 @@ import { PrismaClient } from '@prisma/client';
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
-console.log("DB_URL:", process.env.DATABASE_URL);
-export const prisma = globalForPrisma.prisma || new PrismaClient();
+export const prisma = globalForPrisma.prisma || new PrismaClient({
+    datasources: {
+        db: {
+            url: process.env.DATABASE_URL
+        }
+    }
+} as any);
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
