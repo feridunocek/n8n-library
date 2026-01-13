@@ -45,9 +45,8 @@ ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-# Install OpenSSL for Prisma and Prisma CLI
+# Install OpenSSL for Prisma
 RUN apk add --no-cache openssl
-RUN npm install -g prisma@5.22.0
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -63,8 +62,10 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Copy Prisma schema for db push
+# Copy Prisma schema and CLI for db push
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
 
 COPY --chown=nextjs:nodejs start.sh ./start.sh
 RUN chmod +x ./start.sh
