@@ -45,8 +45,9 @@ ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-# Install OpenSSL for Prisma
+# Install OpenSSL for Prisma and Prisma CLI
 RUN apk add --no-cache openssl
+RUN npm install -g prisma@5.22.0
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
