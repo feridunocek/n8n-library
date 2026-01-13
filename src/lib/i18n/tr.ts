@@ -1,0 +1,56 @@
+import { en } from "./en";
+
+export const tr: typeof en = {
+    common: {
+        backToDashboard: "Panele Dön",
+        uploadJSON: "JSON Yükle",
+        searchPlaceholder: "İsim veya #etiket ile ara...",
+        popular: "Popüler:",
+        share: "Paylaş",
+        downloadJSON: "JSON İndir",
+        copy: "Kopyala",
+        copied: "Kopyalandı!",
+    },
+    sidebar: {
+        dashboard: "Kontrol Paneli",
+        myWorkflows: "İş Akışlarım",
+        settings: "Ayarlar",
+        folders: "KLASÖRLER",
+    },
+    settings: {
+        title: "Ayarlar",
+        description: "Tercihlerinizi ve AI yapılandırmanızı yönetin.",
+        language: "Dil Seçimi",
+        aiConfig: "Yapay Zeka (AI) Ayarları",
+        apiKeyPlaceholder: "API Anahtarınızı girin",
+        save: "Değişiklikleri Kaydet",
+        saved: "Kaydedildi!",
+    },
+    workflow: {
+        processFlow: "İşleyiş Akışı",
+        technicalFeatures: "Teknik Özellikler",
+        aiAnalysis: "AI Analizi",
+        trigger: "Tetikleyici",
+        connectedServices: "Bağlı Servisler",
+        complexity: "Karmaşıklık",
+        nodes: "düğüm",
+        useCases: "Kullanım Senaryoları",
+        blueprint: "Plan (JSON)",
+        interactivePreview: "Etkileşimli Önizleme",
+    },
+    upload: {
+        title: "N8N İş Akışı Yükle",
+        clickToUpload: "Yüklemek için tıkla",
+        dragDrop: "veya sürükle bırak",
+        analyzing: "JSON yapısı analiz ediliyor...",
+        success: "Yükleme Başarılı!",
+        processing: "İş akışınız AI tarafından işleniyor...",
+        errorFile: "Lütfen .json uzantılı bir dosya yükleyin",
+    },
+    myWorkflows: {
+        title: "Tüm İş Akışları",
+        sort: "Sırala",
+        view: "Görünüm",
+        favorites: "Sadece Favoriler",
+    },
+};
