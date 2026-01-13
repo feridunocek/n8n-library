@@ -1,4 +1,7 @@
-FROM node:22-alpine AS base
+
+# Pass the DATABASE_URL environment variable during build
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
 
 # Install dependencies only when needed
 FROM base AS deps
