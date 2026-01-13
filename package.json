@@ -9,8 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@prisma/client": "^7.2.0",
-    "bcryptjs": "^3.0.3",
+    "@next/third-parties": "^15.1.0",
+    "@prisma/client": "^5.22.0",
+    "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.3",
     "framer-motion": "^12.26.0",
@@ -29,7 +30,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
-    "prisma": "^7.2.0",
+    "prisma": "^5.22.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
