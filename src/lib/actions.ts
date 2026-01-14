@@ -1,10 +1,10 @@
 'use server';
 
-import { signIn, signOut } from '@/../auth';
+import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { prisma } from '@/lib/prisma'; // We need a singleton Prisma client
 import { Workflow } from '@/lib/data';
-import { auth } from '@/../auth';
+import { auth } from '@/auth';
 import { encrypt, decrypt } from '@/lib/encryption';
 
 const bcrypt = require('bcryptjs');
