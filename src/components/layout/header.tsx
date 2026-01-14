@@ -9,7 +9,6 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useWorkflows } from "@/lib/contexts/workflow-context";
 import { useMemo } from "react";
 
-import { Button } from "@/components/ui/button"; // Assuming Button component exists, or use HTML standard buttons
 import Link from "next/link";
 import { User } from "next-auth"; // Should import User type
 
