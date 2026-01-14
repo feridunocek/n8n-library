@@ -12,6 +12,7 @@ model User {
   username  String   @unique
   password  String
   createdAt DateTime @default(now())
+  customPrompt String? // User defined prompt for analysis
 
   workflows Workflow[]
   apiKeys   ApiKey[]
