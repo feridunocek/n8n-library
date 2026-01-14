@@ -19,12 +19,16 @@ export const metadata: Metadata = {
 
 import { getWorkflowsAction } from "@/lib/actions";
 
+import { auth } from "@/auth"; // Check correct path
+// ... imports
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const initialWorkflows = await getWorkflowsAction();
+  const session = await auth();
 
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
@@ -39,7 +43,7 @@ export default async function RootLayout({
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background pointer-events-none -z-10" />
 
               <Suspense fallback={<div className="h-16 border-b border-border bg-background/50" />}>
-                <Header />
+                <Header user={session?.user} />
               </Suspense>
               <div className="flex-1 overflow-y-auto w-full p-6">
                 {children}

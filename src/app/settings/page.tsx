@@ -67,6 +67,27 @@ export default function SettingsPage() {
         }
     };
 
+    // Custom Prompt State
+    const [customPrompt, setCustomPrompt] = useState("");
+    const [loadingPrompt, setLoadingPrompt] = useState(true);
+
+    // Load prompt on mount
+    import { useEffect } from "react";
+    import { getCustomPromptAction, saveCustomPromptAction } from "@/lib/actions";
+
+    useEffect(() => {
+        getCustomPromptAction().then(p => {
+            if (p !== null) setCustomPrompt(p);
+            setLoadingPrompt(false);
+        });
+    }, []);
+
+    const handleSavePrompt = async () => {
+        await saveCustomPromptAction(customPrompt);
+        setShowSaved(true);
+        setTimeout(() => setShowSaved(false), 2000);
+    };
+
     return (
         <div className="max-w-2xl mx-auto space-y-8 mt-10 pb-20">
             <div className="space-y-2">
@@ -102,6 +123,41 @@ export default function SettingsPage() {
                         >
                             <span className="font-medium">English</span>
                             {language === "en" && <Check className="w-4 h-4" />}
+                        </button>
+                    </div>
+                </div>
+
+                {/* Custom AI Prompt */}
+                <div className="bg-card border border-border p-6 rounded-xl space-y-4">
+                    <div className="flex items-center gap-2 mb-2">
+                        <div className="p-2 bg-purple-500/10 rounded-lg">
+                            <Bot className="w-5 h-5 text-purple-500" />
+                        </div>
+                        <h2 className="font-semibold text-lg">AI Persona & Prompt</h2>
+                    </div>
+
+                    <p className="text-sm text-muted-foreground">
+                        {language === 'tr'
+                            ? "Yapay zekanın analiz yaparken kullanacağı yönergeyi özelleştirin. Boş bırakırsanız varsayılan uzman modu kullanılır."
+                            : "Customize the prompt used by AI for analysis. Leave empty to use the default expert mode."}
+                    </p>
+
+                    <div className="space-y-2">
+                        <textarea
+                            value={customPrompt}
+                            onChange={(e) => setCustomPrompt(e.target.value)}
+                            placeholder={language === 'tr'
+                                ? "Örn: Sen esprili bir anlatıcısın. İş akışını masal gibi anlat..."
+                                : "Ex: You are a witty narrator. Explain the workflow like a fairy tale..."}
+                            className="w-full h-32 bg-secondary/30 border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary/50 text-sm resize-y"
+                            disabled={loadingPrompt}
+                        />
+                        <button
+                            onClick={handleSavePrompt}
+                            disabled={loadingPrompt}
+                            className="text-sm px-4 py-2 bg-secondary hover:bg-secondary/80 rounded border border-white/10 transition-colors"
+                        >
+                            {language === 'tr' ? "Promptu Kaydet" : "Save Prompt"}
                         </button>
                     </div>
                 </div>

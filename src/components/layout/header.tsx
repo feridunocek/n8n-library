@@ -9,7 +9,11 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useWorkflows } from "@/lib/contexts/workflow-context";
 import { useMemo } from "react";
 
-export function Header() {
+import { Button } from "@/components/ui/button"; // Assuming Button component exists, or use HTML standard buttons
+import Link from "next/link";
+import { User } from "next-auth"; // Should import User type
+
+export function Header({ user }: { user?: User }) {
     const [isUploadOpen, setIsUploadOpen] = useState(false);
     const { t } = useSettings();
     const { workflows } = useWorkflows();
@@ -69,13 +73,32 @@ export function Header() {
                         />
                     </div>
 
-                    <button
-                        onClick={() => setIsUploadOpen(true)}
-                        className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-primary/20 cursor-pointer"
-                    >
-                        <Plus className="w-4 h-4" />
-                        {t.common.uploadJSON}
-                    </button>
+                    <div className="flex items-center gap-3">
+                        {user ? (
+                            <button
+                                onClick={() => setIsUploadOpen(true)}
+                                className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-primary/20 cursor-pointer"
+                            >
+                                <Plus className="w-4 h-4" />
+                                {t.common.uploadJSON}
+                            </button>
+                        ) : (
+                            <div className="flex items-center gap-2">
+                                <Link
+                                    href="/login"
+                                    className="px-4 py-2 text-sm font-medium hover:text-primary transition-colors"
+                                >
+                                    Login
+                                </Link>
+                                <Link
+                                    href="/register"
+                                    className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors shadow-md"
+                                >
+                                    Register
+                                </Link>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Popular Tags */}

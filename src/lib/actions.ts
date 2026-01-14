@@ -219,7 +219,13 @@ export async function generateAIAnalysisAction(workflowJson: any, provider: 'ope
     const langName = lang === 'tr' ? 'Turkish' : 'English';
     const selectedGeminiModel = model || "models/gemini-1.5-flash"; // Default
 
-    const systemPrompt = `You are an expert N8N workflow architect and analyst. 
+    // Fetch User for Custom Prompt
+    const userRecord = await prisma.user.findUnique({
+        where: { id: session.user.id }
+    });
+
+    // Default Prompt
+    let promptToUse = `You are an expert N8N workflow architect and analyst. 
     Analyze the provided N8N workflow JSON in depth. 
     
     CRITICAL RULES:
@@ -243,6 +249,24 @@ export async function generateAIAnalysisAction(workflowJson: any, provider: 'ope
     4. "useCases": 3 real-world business scenarios.
     5. "hashtags": Generate at least 6 relevant technical hashtags (e.g. #automation, #marketing, #email, #webhook, #api).
     `;
+
+    // Override if custom prompt exists
+    if (userRecord?.customPrompt && userRecord.customPrompt.trim().length > 10) {
+        promptToUse = userRecord.customPrompt + `
+        
+        IMPORTANT: Your output MUST be a valid JSON object with the following structure:
+        { 
+            "summary": "string", 
+            "useCases": ["string"], 
+            "technicalFeatures": ["string"],
+            "processSteps": ["string"],
+            "hashtags": ["string"]
+        }
+        Do not wrap in markdown code blocks. Just raw JSON.
+        `;
+    }
+
+    const systemPrompt = promptToUse;
 
     const userContent = JSON.stringify(workflowJson).substring(0, 25000);
 
