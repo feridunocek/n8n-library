@@ -1,3 +1,5 @@
+"use client";
+
 import { useSettings } from "@/lib/contexts/settings-context";
 import { Check, Globe, Bot, Shield, AlertTriangle } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -70,9 +72,6 @@ export default function SettingsPage() {
     const [loadingPrompt, setLoadingPrompt] = useState(true);
 
     // Load prompt on mount
-    import { useEffect } from "react";
-    import { getCustomPromptAction, saveCustomPromptAction } from "@/lib/actions";
-
     useEffect(() => {
         getCustomPromptAction().then(p => {
             if (p !== null) setCustomPrompt(p);
