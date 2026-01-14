@@ -1,9 +1,7 @@
-"use client";
-
 import { useSettings } from "@/lib/contexts/settings-context";
 import { Check, Globe, Bot, Shield, AlertTriangle } from "lucide-react";
-import { useState } from "react";
-import { testConnectionAction } from "@/lib/actions";
+import { useState, useEffect } from "react";
+import { testConnectionAction, getCustomPromptAction, saveCustomPromptAction } from "@/lib/actions";
 
 export default function SettingsPage() {
     const {
