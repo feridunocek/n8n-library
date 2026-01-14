@@ -391,3 +391,25 @@ export async function testConnectionAction(provider: string, key: string) {
         return { success: false, message: e.message || "Connection Failed" };
     }
 }
+
+export async function getCustomPromptAction() {
+    const session = await auth();
+    if (!session?.user?.id) return null;
+
+    const user = await prisma.user.findUnique({
+        where: { id: session.user.id },
+        select: { customPrompt: true }
+    });
+    return user?.customPrompt || "";
+}
+
+export async function saveCustomPromptAction(prompt: string) {
+    const session = await auth();
+    if (!session?.user?.id) throw new Error("Unauthorized");
+
+    await prisma.user.update({
+        where: { id: session.user.id },
+        data: { customPrompt: prompt }
+    });
+    return { success: true };
+}
